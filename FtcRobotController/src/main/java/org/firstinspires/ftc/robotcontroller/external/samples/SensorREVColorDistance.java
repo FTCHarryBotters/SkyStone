@@ -127,13 +127,13 @@ public class SensorREVColorDistance extends LinearOpMode {
                     hsvValues);
 
             // send the info back to driver station using telemetry function.
-            telemetry.addData("Distance (cm)",
-                    String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
             telemetry.addData("Alpha", sensorColor.alpha());
             telemetry.addData("Red  ", sensorColor.red());
             telemetry.addData("Green", sensorColor.green());
             telemetry.addData("Blue ", sensorColor.blue());
             telemetry.addData("Hue", hsvValues[0]);
+            telemetry.addData("Saturation", hsvValues[1]);
+            telemetry.addData("Value", hsvValues[2]);
 
             // change the background color to match the color detected by the RGB sensor.
             // pass a reference to the hue, saturation, and value array as an argument

@@ -26,11 +26,6 @@ public class TeleOp2020_0 extends LinearOpMode{
     private Servo waffleLeftS;
     private Servo waffleRghtS;
 
-    //we need to find the position of the servos that suck the motors in two places.
-    //this way we only change it once
-    double LeftServo = 0.5;
-    double RghtServo = 0.5;
-
     double armServoPower;
 
     double drivespeed = 0.5;
@@ -78,8 +73,8 @@ public class TeleOp2020_0 extends LinearOpMode{
         waitForStart();
 
         //move succ motors out at start of teleop
-        stoneLeftS.setPosition(LeftServo);
-        stoneRghtS.setPosition(RghtServo);
+        stoneLeftS.setPosition(0.5);
+        stoneRghtS.setPosition(0.5);
 
         while(opModeIsActive()) {
 
@@ -117,8 +112,8 @@ public class TeleOp2020_0 extends LinearOpMode{
 
             //KV can move the servos holding the succ motors in and out
             if (gamepad1.right_bumper) {
-                stoneLeftS.setPosition(LeftServo);
-                stoneRghtS.setPosition(RghtServo);
+                stoneLeftS.setPosition(0.5);
+                stoneRghtS.setPosition(0.5);
             }else {
                 if (gamepad1.left_bumper) {
                     stoneLeftS.setPosition(1);
