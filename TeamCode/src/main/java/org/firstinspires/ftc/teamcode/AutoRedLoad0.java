@@ -77,7 +77,7 @@ public class AutoRedLoad0 extends LinearOpMode {
             moveRghtE(0.5, 1200);
             checkStones();
             if (robotWhere == 0) {
-                spinRightE(0.5, 1350);
+                spinRghtE(0.5, 1350);
                 driveForwardE(0.5, 1600);
                 stoneLeftS.setPosition(0.25);
                 stoneRghtS.setPosition(0.75);
@@ -89,7 +89,7 @@ public class AutoRedLoad0 extends LinearOpMode {
                 Thread.sleep(1000);
             }
             if (robotWhere == 1) {
-                spinRightE(0.5, 1350);
+                spinRghtE(0.5, 1350);
                 driveForwardE(0.5, 2000);
                 stoneLeftS.setPosition(0.25);
                 stoneRghtS.setPosition(0.75);
@@ -101,7 +101,7 @@ public class AutoRedLoad0 extends LinearOpMode {
                 Thread.sleep(1000);
             }
             if (robotWhere == 2) {
-                spinRightE(0.5, 1350);
+                spinRghtE(0.5, 1350);
                 driveForwardE(0.5, 2400);
                 stoneLeftS.setPosition(0.25);
                 stoneRghtS.setPosition(0.75);
@@ -136,7 +136,7 @@ public class AutoRedLoad0 extends LinearOpMode {
 
         if (isSkystone) {
             driveBackwardE(0.3,400);
-            spinRightE(0.3, 450);
+            spinRghtE(0.3, 450);
             stoneLeftS.setPosition(0.5);
             stoneRghtS.setPosition(0.6);
             Thread.sleep(200);
@@ -312,7 +312,7 @@ public class AutoRedLoad0 extends LinearOpMode {
         driveBLM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         driveBRM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    public void spinRightE(double power, int ticks) {
+    public void spinRghtE(double power, int ticks) {
         //Reset Encoders
         driveFLM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         driveFRM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
