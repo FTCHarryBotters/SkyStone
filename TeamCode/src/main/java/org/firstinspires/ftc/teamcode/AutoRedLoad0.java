@@ -2,15 +2,16 @@ package org.firstinspires.ftc.teamcode;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.os.strictmode.IntentReceiverLeakedViolation;
 import android.view.View;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @Autonomous(name = "AutoRedLoad0", group = "Sample")
 public class AutoRedLoad0 extends LinearOpMode {
@@ -27,12 +28,14 @@ public class AutoRedLoad0 extends LinearOpMode {
     private DcMotor stoneLeftM;
     private DcMotor stoneRghtM;
 
-    private Servo stoneLeftS;
-    private Servo stoneRghtS;
-    private Servo waffleLeftS;
-    private Servo waffleRghtS;
+    private Servo succLeftS;
+    private Servo succRghtS;
 
-    private ColorSensor stoneRght;
+    //declare distance sensor (DS)
+    private DistanceSensor stoneDS;
+
+    //declare color sensor (CS) and related variables
+    private ColorSensor stoneRghtCS;
     float hsvValues[] = {0F, 0F, 0F};
     final float values[] = hsvValues;
     final double SCALE_FACTOR = 255;
@@ -41,9 +44,12 @@ public class AutoRedLoad0 extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+        //change screen color
         relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
         relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
-        //init
+
+        //initialize motors
         driveFLM = hardwareMap.dcMotor.get("driveFLM");
         driveFRM = hardwareMap.dcMotor.get("driveFRM");
         driveBLM = hardwareMap.dcMotor.get("driveBLM");
@@ -51,10 +57,9 @@ public class AutoRedLoad0 extends LinearOpMode {
         stoneLeftM = hardwareMap.dcMotor.get("stoneLeftM");
         stoneRghtM = hardwareMap.dcMotor.get("stoneRightM");
 
-        stoneLeftS  = hardwareMap.servo.get("stoneLeftS");
-        stoneRghtS  = hardwareMap.servo.get("stoneRightS");
-        waffleLeftS = hardwareMap.servo.get("waffleLeftS");
-        waffleRghtS = hardwareMap.servo.get("waffleRightS");
+        //initialize swervos
+        succLeftS  = hardwareMap.servo.get("succLeftS");
+        succRghtS  = hardwareMap.servo.get("succRightS");
 
         driveFLM.setDirection(DcMotor.Direction.FORWARD);
         driveFRM.setDirection(DcMotor.Direction.REVERSE);
@@ -70,7 +75,9 @@ public class AutoRedLoad0 extends LinearOpMode {
         stoneLeftM.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         stoneRghtM.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        stoneRght = hardwareMap.colorSensor.get("stoneRght");
+        stoneRghtCS = hardwareMap.colorSensor.get("stoneRghtCS");
+        stoneDS = hardwareMap.get(DistanceSensor.class, "stoneDS");
+
         waitForStart();
         //what runs
 
@@ -78,50 +85,38 @@ public class AutoRedLoad0 extends LinearOpMode {
             checkStones();
             if (robotWhere == 0) {
                 spinRghtE(0.5, 1350);
-                driveForwardE(0.5, 1600);
-                stoneLeftS.setPosition(0.25);
-                stoneRghtS.setPosition(0.75);
+                succLeftS.setPosition(0.25);
+                succRghtS.setPosition(0.75);
+                driveForwardE(1, 1000);
                 Thread.sleep(500);
-                stoneLeftS.setPosition(0.5);
-                stoneRghtS.setPosition(0.5);
-                stoneLeftM.setPower(-1);
-                stoneRghtM.setPower(-1);
-                Thread.sleep(1000);
+                driveBackwardE(1, 1000);
             }
             if (robotWhere == 1) {
                 spinRghtE(0.5, 1350);
-                driveForwardE(0.5, 2000);
-                stoneLeftS.setPosition(0.25);
-                stoneRghtS.setPosition(0.75);
+                succLeftS.setPosition(0.25);
+                succRghtS.setPosition(0.75);
+                driveForwardE(1, 1400);
                 Thread.sleep(500);
-                stoneLeftS.setPosition(0.5);
-                stoneRghtS.setPosition(0.5);
-                stoneLeftM.setPower(-1);
-                stoneRghtM.setPower(-1);
-                Thread.sleep(1000);
+                driveBackwardE(1, 1400);
             }
             if (robotWhere == 2) {
                 spinRghtE(0.5, 1350);
-                driveForwardE(0.5, 2400);
-                stoneLeftS.setPosition(0.25);
-                stoneRghtS.setPosition(0.75);
+                succLeftS.setPosition(0.25);
+                succRghtS.setPosition(0.75);
+                driveForwardE(1, 1800);
                 Thread.sleep(500);
-                stoneLeftS.setPosition(0.5);
-                stoneRghtS.setPosition(0.5);
-                stoneLeftM.setPower(-1);
-                stoneRghtM.setPower(-1);
-                Thread.sleep(1000);
+                driveBackwardE(1, 1800);
             }
     }
-    public void getSkystone() throws InterruptedException {
+    private void getSkystone() throws InterruptedException {
         Color.RGBToHSV(
-                (int) (stoneRght.red() * SCALE_FACTOR),
-                (int) (stoneRght.green() * SCALE_FACTOR),
-                (int) (stoneRght.blue() * SCALE_FACTOR),
+                (int) (stoneRghtCS.red() * SCALE_FACTOR),
+                (int) (stoneRghtCS.green() * SCALE_FACTOR),
+                (int) (stoneRghtCS.blue() * SCALE_FACTOR),
                 hsvValues);
-        telemetry.addData("Hue", hsvValues[0]);
-        telemetry.addData("Saturation", hsvValues[1]);
-        telemetry.addData("Value", hsvValues[2]);
+        telemetry.addData("Hoo", hsvValues[0]);
+        telemetry.addData("Satchurashun", hsvValues[1]);
+        telemetry.addData("Valyoo", hsvValues[2]);
         telemetry.update();
 
         relativeLayout.post(new Runnable() {
@@ -130,27 +125,43 @@ public class AutoRedLoad0 extends LinearOpMode {
             }
         });
 
-        if (hsvValues[0]>55) {
+        if (hsvValues[0]>120) {
             isSkystone = true;
         }
 
         if (isSkystone) {
-            driveBackwardE(0.3,400);
+            driveBackwardE(0.3,350);
             spinRghtE(0.3, 450);
-            stoneLeftS.setPosition(0.5);
-            stoneRghtS.setPosition(0.6);
+            succLeftS.setPosition(0.5);
+            succRghtS.setPosition(0.5);
             Thread.sleep(200);
             stoneLeftM.setPower(1);
             stoneRghtM.setPower(1);
-            driveForwardE(0.3, 600);
+
+            driveFLM.setPower(.25);
+            driveFRM.setPower(.25);
+            driveBLM.setPower(.25);
+            driveBRM.setPower(.25);
+            double i = 0;
+            while (stoneDS.getDistance(DistanceUnit.CM) > 10 && i<100) {
+                i++;
+                telemetry.addData("suck it KV", i);
+                telemetry.update();
+            }
+            driveFLM.setPower(0);
+            driveFRM.setPower(0);
+            driveBLM.setPower(0);
+            driveBRM.setPower(0);
+
             stoneLeftM.setPower(0);
             stoneRghtM.setPower(0);
-            stoneLeftS.setPosition(0.6);
-            stoneRghtS.setPosition(0.4);
-            driveBackwardE(0.3, 600);
+            succLeftS.setPosition(0.6);
+            succRghtS.setPosition(0.4);
+            moveLeftE(0.5, 100);
+            driveBackwardE(0.9, 1200);
         }
     }
-    public void checkStones() throws InterruptedException {
+    private void checkStones() throws InterruptedException {
         while (!isSkystone&&tries<2) {
             tries++;
             robotWhere = 0;

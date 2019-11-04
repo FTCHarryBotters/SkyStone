@@ -4,7 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @TeleOp(name = "TeleOp2020_0", group = "Sample")
 public class TeleOp2020_0 extends LinearOpMode{
@@ -27,12 +30,12 @@ public class TeleOp2020_0 extends LinearOpMode{
     private Servo stoneLeftS;
     private Servo stoneRghtS;
     private  Servo stoneS;
-    //private Servo waffleLeftS;
-    //private Servo waffleRghtS;
 
-    double armServoPower;
+    //declare distance sensor/detector
+    private DistanceSensor stoneDS;
 
     double drivespeed = 0.5;
+    boolean stoned = false;
 
     @Override
     public void
@@ -53,13 +56,14 @@ public class TeleOp2020_0 extends LinearOpMode{
             //configure swervos
             succLeftS     = hardwareMap.servo.get("succLeftS");
             succRghtS     = hardwareMap.servo.get("succRightS");
-            armLeftS      = hardwareMap.servo.get("armLeftS");
+           /* armLeftS      = hardwareMap.servo.get("armLeftS");
             armRghtS      = hardwareMap.servo.get("armRightS");
             stoneLeftS    = hardwareMap.servo.get("stoneLeftS");
             stoneRghtS    = hardwareMap.servo.get("stoneRightS");
-            stoneS        = hardwareMap.servo.get("stoneS");
-            //waffleLeftS = hardwareMap.servo.get("waffleLeftS");
-            //waffleRghtS = hardwareMap.servo.get("waffleRightS");
+            stoneS        = hardwareMap.servo.get("stoneS");*/
+
+            //configure distance detector
+            stoneDS = hardwareMap.get(DistanceSensor.class, "stoneDS");
 
             //set motor directions
             driveFLM.setDirection(DcMotor.Direction.FORWARD);
@@ -70,6 +74,12 @@ public class TeleOp2020_0 extends LinearOpMode{
             stoneRghtM.setDirection(DcMotor.Direction.FORWARD);
             verticalLeftM.setDirection(DcMotor.Direction.FORWARD);
             verticalRghtM.setDirection(DcMotor.Direction.REVERSE);
+
+            //set continuous servo directions
+          /* armLeftS.setDirection(Servo.Direction.FORWARD);
+            armRghtS.setDirection(Servo.Direction.REVERSE);
+            stoneLeftS.setDirection(Servo.Direction.FORWARD);
+            stoneRghtS.setDirection(Servo.Direction.REVERSE);*/
 
             //set all motors to not use encoders
             driveFLM.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -110,6 +120,7 @@ public class TeleOp2020_0 extends LinearOpMode{
             if (gamepad1.a) {
                 stoneLeftM.setPower(1);
                 stoneRghtM.setPower(1);
+                stoned = true;
             }else {
                 if (gamepad1.b) {
                     stoneLeftM.setPower(0);
@@ -151,17 +162,25 @@ public class TeleOp2020_0 extends LinearOpMode{
                     if (gamepad1.right_trigger>0.1) {
                         succLeftS.setPosition(0.25);
                         succRghtS.setPosition(0.75);
+                    }else {
+                        if (stoneDS.getDistance(DistanceUnit.CM) < 10 && stoned) {
+                            stoneLeftM.setPower(0);
+                            stoneRghtM.setPower(0);
+                            succLeftS.setPosition(1);
+                            succRghtS.setPosition(0);
+                            stoned = false;
+                        }
                     }
                 }
             }
-
+/*
             if (gamepad2.dpad_up) {
                 armLeftS.setPosition(0.75);
-                armRghtS.setPosition(0.25);
+                armRghtS.setPosition(0.75);
             }else {
                 if (gamepad2.dpad_down) {
                     armLeftS.setPosition(0.25);
-                    armRghtS.setPosition(0.75);
+                    armRghtS.setPosition(0.25);
                 }else {
                     armLeftS.setPosition(.5);
                     armRghtS.setPosition(.5);
@@ -172,11 +191,11 @@ public class TeleOp2020_0 extends LinearOpMode{
             //he uses this to help place stone and to keep it horizontal.
             if (gamepad2.right_trigger>0.1) {
                 stoneLeftS.setPosition(0.65);
-                stoneRghtS.setPosition(0.35);
+                stoneRghtS.setPosition(0.65);
             }else {
                 if (gamepad2.left_trigger>0.1) {
                     stoneLeftS.setPosition(0.35);
-                    stoneRghtS.setPosition(0.65);
+                    stoneRghtS.setPosition(0.35);
                 }else {
                     stoneLeftS.setPosition(0.5);
                     stoneRghtS.setPosition(0.5);
@@ -191,19 +210,7 @@ public class TeleOp2020_0 extends LinearOpMode{
                     stoneS.setPosition(1);
                 }
             }
-
-            //used in endgame to move the foundation/waffle iron.
-            /*
-            if (gamepad2.dpad_down) {
-                waffleLeftS.setPosition(1);
-                waffleRghtS.setPosition(0);
-            }else {
-                if (gamepad2.dpad_up) {
-                    waffleLeftS.setPosition(0.5);
-                    waffleRghtS.setPosition(0.5);
-                }
-            }
-            */
+*/
         }
     }
 }
