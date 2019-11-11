@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@TeleOp(name = "TeleOp2020_0", group = "Sample")
-public class TeleOp2020_0 extends LinearOpMode{
+@TeleOp(name = "TeleOp2020_1", group = "Sample")
+public class TeleOp2020_1 extends LinearOpMode{
 
     //declare motors
     private DcMotor driveFLM;
@@ -19,17 +19,13 @@ public class TeleOp2020_0 extends LinearOpMode{
     private DcMotor driveBRM;
     private DcMotor stoneLeftM;
     private DcMotor stoneRghtM;
-    private DcMotor verticalLeftM;
-    private DcMotor verticalRghtM;
+    private DcMotor verticalM;
 
     //declare swervos
     private Servo succLeftS;
     private Servo succRghtS;
-    private Servo armLeftS;
-    private Servo armRghtS;
-    private Servo stoneLeftS;
-    private Servo stoneRghtS;
-    private  Servo stoneS;
+    private Servo armS;
+    private Servo stoneS;
 
     //declare distance sensor/detector
     private DistanceSensor stoneDS;
@@ -44,23 +40,19 @@ public class TeleOp2020_0 extends LinearOpMode{
         //configuration
         if (true) {
             //configure motors
-            driveFLM      = hardwareMap.dcMotor.get("driveFLM");
-            driveFRM      = hardwareMap.dcMotor.get("driveFRM");
-            driveBLM      = hardwareMap.dcMotor.get("driveBLM");
-            driveBRM      = hardwareMap.dcMotor.get("driveBRM");
-            stoneLeftM    = hardwareMap.dcMotor.get("stoneLeftM");
-            stoneRghtM    = hardwareMap.dcMotor.get("stoneRightM");
-            verticalLeftM = hardwareMap.dcMotor.get("verticalLeftM");
-            verticalRghtM = hardwareMap.dcMotor.get("verticalRightM");
+            driveFLM   = hardwareMap.dcMotor.get("driveFLM");
+            driveFRM   = hardwareMap.dcMotor.get("driveFRM");
+            driveBLM   = hardwareMap.dcMotor.get("driveBLM");
+            driveBRM   = hardwareMap.dcMotor.get("driveBRM");
+            stoneLeftM = hardwareMap.dcMotor.get("stoneLeftM");
+            stoneRghtM = hardwareMap.dcMotor.get("stoneRightM");
+            verticalM  = hardwareMap.dcMotor.get("verticalM");
 
             //configure swervos
-            succLeftS     = hardwareMap.servo.get("succLeftS");
-            succRghtS     = hardwareMap.servo.get("succRightS");
-           /* armLeftS      = hardwareMap.servo.get("armLeftS");
-            armRghtS      = hardwareMap.servo.get("armRightS");
-            stoneLeftS    = hardwareMap.servo.get("stoneLeftS");
-            stoneRghtS    = hardwareMap.servo.get("stoneRightS");
-            stoneS        = hardwareMap.servo.get("stoneS");*/
+            succLeftS = hardwareMap.servo.get("succLeftS");
+            succRghtS = hardwareMap.servo.get("succRightS");
+            armS      = hardwareMap.servo.get("armS");
+            stoneS    = hardwareMap.servo.get("stoneS");
 
             //configure distance detector
             stoneDS = hardwareMap.get(DistanceSensor.class, "stoneDS");
@@ -72,14 +64,7 @@ public class TeleOp2020_0 extends LinearOpMode{
             driveBRM.setDirection(DcMotor.Direction.REVERSE);
             stoneLeftM.setDirection(DcMotor.Direction.REVERSE);
             stoneRghtM.setDirection(DcMotor.Direction.FORWARD);
-            verticalLeftM.setDirection(DcMotor.Direction.FORWARD);
-            verticalRghtM.setDirection(DcMotor.Direction.REVERSE);
-
-            //set continuous servo directions
-          /* armLeftS.setDirection(Servo.Direction.FORWARD);
-            armRghtS.setDirection(Servo.Direction.REVERSE);
-            stoneLeftS.setDirection(Servo.Direction.FORWARD);
-            stoneRghtS.setDirection(Servo.Direction.REVERSE);*/
+            verticalM.setDirection(DcMotor.Direction.FORWARD);
 
             //set all motors to not use encoders
             driveFLM.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -88,8 +73,7 @@ public class TeleOp2020_0 extends LinearOpMode{
             driveBRM.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             stoneLeftM.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             stoneRghtM.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            verticalLeftM.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            verticalRghtM.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            verticalM.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
         waitForStart();
@@ -133,20 +117,15 @@ public class TeleOp2020_0 extends LinearOpMode{
                 }
             }
 
-            if (gamepad2.right_bumper) {
-                verticalLeftM.setPower(0.5);
-                verticalRghtM.setPower(0.5);
+            if (gamepad2.right_trigger > 0.1) {
+                verticalM.setPower(gamepad2.right_trigger);
             }else {
-                if (gamepad2.left_bumper) {
-                    verticalLeftM.setPower(-0.5);
-                    verticalRghtM.setPower(-0.5);
+                if (gamepad2.left_trigger > 0.1) {
+                    verticalM.setPower(-gamepad2.left_trigger);
                 }else {
-                    verticalLeftM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                    verticalRghtM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                    verticalLeftM.setPower(0);
-                    verticalRghtM.setPower(0);
-                    verticalLeftM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                    verticalRghtM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                    verticalM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                    verticalM.setPower(0);
+                    verticalM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 }
             }
 
@@ -168,49 +147,34 @@ public class TeleOp2020_0 extends LinearOpMode{
                             stoneRghtM.setPower(0);
                             succLeftS.setPosition(1);
                             succRghtS.setPosition(0);
-                            stoned = false;
+                            stoned = false
+                            ;
                         }
                     }
                 }
             }
-/*
-            if (gamepad2.dpad_up) {
-                armLeftS.setPosition(0.75);
-                armRghtS.setPosition(0.75);
+
+            if (gamepad2.right_bumper) {
+                armS.setPosition(1);
             }else {
-                if (gamepad2.dpad_down) {
-                    armLeftS.setPosition(0.25);
-                    armRghtS.setPosition(0.25);
-                }else {
-                    armLeftS.setPosition(.5);
-                    armRghtS.setPosition(.5);
+                if (gamepad2.left_bumper) {
+                    armS.setPosition(0);
                 }
             }
 
-            //Mike uses the triggers to move just the servos at the end of the arm.
-            //he uses this to help place stone and to keep it horizontal.
-            if (gamepad2.right_trigger>0.1) {
-                stoneLeftS.setPosition(0.65);
-                stoneRghtS.setPosition(0.65);
-            }else {
-                if (gamepad2.left_trigger>0.1) {
-                    stoneLeftS.setPosition(0.35);
-                    stoneRghtS.setPosition(0.35);
-                }else {
-                    stoneLeftS.setPosition(0.5);
-                    stoneRghtS.setPosition(0.5);
-                }
-            }
 
             //Mike grabs or lets go of the stone at the end of the arm
-            if (gamepad2.b) {
+            if (gamepad2.dpad_up) {
                 stoneS.setPosition(0);
             }else {
-                if (gamepad2.a) {
+                if (gamepad2.dpad_down) {
                     stoneS.setPosition(1);
                 }
             }
-*/
+
+            if (gamepad1.x && gamepad2.left_stick_button) {
+                stop();
+            }
         }
     }
 }
