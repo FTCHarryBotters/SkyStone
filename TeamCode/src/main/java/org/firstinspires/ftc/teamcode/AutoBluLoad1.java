@@ -8,13 +8,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 @Autonomous(name = "AutoRedLoad1", group = "Sample")
-public class AutoRedLoad1 extends LinearOpMode {
+public class AutoBluLoad1 extends LinearOpMode {
 
     //declare motors
     private boolean isSkystone = false;
@@ -28,7 +25,7 @@ public class AutoRedLoad1 extends LinearOpMode {
 
     //declare servos
     private Servo skystoneForeS;
-    //private Servo skystoneBackS;
+    private Servo skystoneBackS;
     
     //declare color sensor (CS) and related variables
     private ColorSensor stoneForeCS;
@@ -54,7 +51,7 @@ public class AutoRedLoad1 extends LinearOpMode {
 
             //initialize servos
             skystoneForeS = hardwareMap.servo.get("skystoneFrontS");
-            //skystoneBackS = hardwareMap.servo.get("skystoneBackS");
+            skystoneBackS = hardwareMap.servo.get("skystoneBackS");
 
             //set motor directions
             driveFLM.setDirection(DcMotor.Direction.FORWARD);
@@ -75,30 +72,30 @@ public class AutoRedLoad1 extends LinearOpMode {
         waitForStart();
         //what runs
 
-        moveLeftE(0.5, 1300);
+        moveRghtE(0.5, 1300);
         checkStones();
 
         driveForwardE(0.5, 200);
-        skystoneForeS.setPosition(1);
+        skystoneForeS.setPosition(0);
         Thread.sleep(2000);
-        moveRghtE(0.5, 1000);
+        moveLeftE(0.5, 1000);
 
         driveForwardE(0.5, ((robotWhere*350)+2000));
-        skystoneForeS.setPosition(0);
+        skystoneForeS.setPosition(1);
         Thread.sleep(1500);
         driveBackwardE(0.5, ((robotWhere*350)+2600));
 
-        moveLeftE(0.5, 800);
-        /*skystoneBackS.setPosition(0);
+        moveRghtE(0.5, 800);
+        skystoneBackS.setPosition(0);
         moveRghtE(0.5, 1000);
 
         driveForwardE(0.5, ((robotWhere*400)+1600));
         skystoneBackS.setPosition(1);
         driveBackwardE(0.5, ((robotWhere*400)+400));
         moveLeftE(0.5, 500);
-        */
+
     }
-    private void getSkystone() throws InterruptedException {
+    private void getSkystone() {
 
         Color.RGBToHSV(
         (int) (stoneForeCS.red() * SCALE_FACTOR),
@@ -119,7 +116,7 @@ public class AutoRedLoad1 extends LinearOpMode {
 
         if (hsvValues[0]>120) {isSkystone = true;}
     }
-    private void checkStones() throws InterruptedException {
+    private void checkStones() {
         while (!isSkystone&&tries<2) {
             tries++;
             robotWhere = 0;
@@ -401,8 +398,7 @@ public class AutoRedLoad1 extends LinearOpMode {
         driveBRM.setPower(power);
 
         //wait until target position
-        while (driveFLM.isBusy() && driveFRM.isBusy() && driveBLM.isBusy() && driveBRM.isBusy())
-        {
+        while (driveFLM.isBusy() && driveFRM.isBusy() && driveBLM.isBusy() && driveBRM.isBusy()) {
 
         }
 
