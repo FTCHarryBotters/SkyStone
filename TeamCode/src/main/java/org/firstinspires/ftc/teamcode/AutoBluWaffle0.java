@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name = "AutoRedBuild0", group = "Sample")
-public class AutoRedBuild0 extends LinearOpMode {
+@Autonomous(name = "AutoBluWaffle0", group = "Sample")
+public class AutoBluWaffle0 extends LinearOpMode {
 
     //declare
     private DcMotor driveFLM;
@@ -55,24 +55,25 @@ public class AutoRedBuild0 extends LinearOpMode {
 
         waitForStart();
         //what runs
+        driveBackwardE(0.5,400);
         moveLeftE(0.5, 1500);
-        waffleForeS.setPosition(1);
-        waffleBackS.setPosition(0);
+        waffleForeS.setPosition(0);
+        waffleBackS.setPosition(1);
 
         moveRghtE(0.5, 1500);
         waffleForeS.setPosition(0.5);
         waffleBackS.setPosition(0.5);
 
         Thread.sleep(20000);
-        driveBackwardE(0.5, 500);
+        driveForwardE(0.5, 500);
         moveLeftE(0.5, 200);
-        spinLeftE(0.5, 900);
+        spinRghtE(0.5, 900);
 
         if (robotDS.getDistance(DistanceUnit.CM) < 25) {
-            driveForwardE(0.5, 1000);
+            driveBackwardE(0.5, 1000);
             if (robotDS.getDistance(DistanceUnit.CM) < 25) {
                 //if it senses something both places
-                driveBackwardE(0.5, 1000);
+                driveForwardE(0.5, 1000);
                 moveLeftE(1, 700);
             }else {
                 //if it senses nothing

@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name = "AutoRedLoad1", group = "Sample")
-public class AutoBluLoad1 extends LinearOpMode {
+@Autonomous(name = "AutoBluStone1", group = "Sample")
+public class AutoBluStone1 extends LinearOpMode {
 
     //declare motors
     private boolean isSkystone = false;
@@ -72,27 +72,29 @@ public class AutoBluLoad1 extends LinearOpMode {
         waitForStart();
         //what runs
 
-        moveRghtE(0.5, 1300);
+        moveRghtE(0.5, 1200);
         checkStones();
 
         driveForwardE(0.5, 200);
-        skystoneForeS.setPosition(0);
-        Thread.sleep(2000);
+        skystoneForeS.setPosition(0.4);
+        Thread.sleep(1500);
         moveLeftE(0.5, 1000);
 
-        driveForwardE(0.5, ((robotWhere*350)+2000));
-        skystoneForeS.setPosition(1);
+        driveForwardE(0.5, ((robotWhere*400)+2000));
+        skystoneForeS.setPosition(0);
+        Thread.sleep(500);
+        driveBackwardE(0.5, ((robotWhere*400)+2450));
+
+        moveRghtE(0.5, 1200);
+        skystoneBackS.setPosition(0.6);
         Thread.sleep(1500);
-        driveBackwardE(0.5, ((robotWhere*350)+2600));
+        moveLeftE(0.5, 1000);
 
-        moveRghtE(0.5, 800);
-        skystoneBackS.setPosition(0);
-        moveRghtE(0.5, 1000);
-
-        driveForwardE(0.5, ((robotWhere*400)+1600));
+        driveForwardE(0.5, ((robotWhere*400)+2600));
         skystoneBackS.setPosition(1);
-        driveBackwardE(0.5, ((robotWhere*400)+400));
-        moveLeftE(0.5, 500);
+        moveRghtE(0.5, 500);
+        driveBackwardE(0.5, (1000));
+        moveRghtE(0.5, 100);
 
     }
     private void getSkystone() {
@@ -122,11 +124,11 @@ public class AutoBluLoad1 extends LinearOpMode {
             robotWhere = 0;
             getSkystone();
             if (!isSkystone) {
-                driveBackwardE(0.3, 350);
+                driveBackwardE(0.3, 400);
                 robotWhere = 1;
                 getSkystone();
                 if (!isSkystone) {
-                    driveBackwardE(0.3, 350);
+                    driveBackwardE(0.3, 400);
                     robotWhere = 2;
                     getSkystone();
                     if (!isSkystone) {
