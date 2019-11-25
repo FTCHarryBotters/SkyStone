@@ -26,6 +26,10 @@ public class TeleOp2020_1 extends LinearOpMode{
     private Servo succRghtS;
     private Servo armS;
     private Servo stoneS;
+    private Servo skystoneForeS;
+    private Servo skystoneBackS;
+    private Servo waffleForeS;
+    private Servo waffleBackS;
 
     //declare distance sensor/detector
     private DistanceSensor stoneDS;
@@ -53,6 +57,10 @@ public class TeleOp2020_1 extends LinearOpMode{
             succRghtS = hardwareMap.servo.get("succRightS");
             armS      = hardwareMap.servo.get("armS");
             stoneS    = hardwareMap.servo.get("stoneS");
+            skystoneForeS = hardwareMap.servo.get("skystoneFrontS");
+            skystoneBackS = hardwareMap.servo.get("skystoneBackS");
+            waffleForeS = hardwareMap.servo.get("waffleFrontS");
+            waffleBackS = hardwareMap.servo.get("waffleBackS");
 
             //configure distance detector
             stoneDS = hardwareMap.get(DistanceSensor.class, "stoneDS");
@@ -154,6 +162,7 @@ public class TeleOp2020_1 extends LinearOpMode{
                 }
             }
 
+            //moves sideways
             if (gamepad2.right_bumper) {
                 armS.setPosition(1);
             }else {
@@ -162,13 +171,28 @@ public class TeleOp2020_1 extends LinearOpMode{
                 }
             }
 
-
             //Mike grabs or lets go of the stone at the end of the arm
             if (gamepad2.dpad_up) {
                 stoneS.setPosition(0);
             }else {
                 if (gamepad2.dpad_down) {
                     stoneS.setPosition(1);
+                }
+            }
+
+            if (gamepad2.a) skystoneForeS.setPosition(0.4);
+            if (gamepad2.b) skystoneForeS.setPosition(0.0);
+            if (gamepad2.x) skystoneBackS.setPosition(0.6);
+            if (gamepad2.y) skystoneBackS.setPosition(1.0);
+
+
+            if (gamepad1.dpad_left) {
+                waffleForeS.setPosition(0.55);
+                waffleBackS.setPosition(0.60);
+            }else {
+                if (gamepad1.dpad_right) {
+                    waffleForeS.setPosition(0.55);
+                    waffleBackS.setPosition(0.60);
                 }
             }
 

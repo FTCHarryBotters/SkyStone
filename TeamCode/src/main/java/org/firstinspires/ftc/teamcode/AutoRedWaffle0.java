@@ -28,61 +28,79 @@ public class AutoRedWaffle0 extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        //initialize motors
-        driveFLM = hardwareMap.dcMotor.get("driveFLM");
-        driveFRM = hardwareMap.dcMotor.get("driveFRM");
-        driveBLM = hardwareMap.dcMotor.get("driveBLM");
-        driveBRM = hardwareMap.dcMotor.get("driveBRM");
+        if (true) {
+            //initialize motors
+            driveFLM = hardwareMap.dcMotor.get("driveFLM");
+            driveFRM = hardwareMap.dcMotor.get("driveFRM");
+            driveBLM = hardwareMap.dcMotor.get("driveBLM");
+            driveBRM = hardwareMap.dcMotor.get("driveBRM");
 
-        //init servos
-        waffleForeS = hardwareMap.servo.get("waffleFrontS");
-        waffleBackS = hardwareMap.servo.get("waffleBackS");
+            //init servos
+            waffleForeS = hardwareMap.servo.get("waffleFrontS");
+            waffleBackS = hardwareMap.servo.get("waffleBackS");
 
-        //declare sensor of destance
-        robotDS = hardwareMap.get(DistanceSensor.class, "robotDS");
+            //declare sensor of destance
+            robotDS = hardwareMap.get(DistanceSensor.class, "robotDS");
 
-        //set motor directions
-        driveFLM.setDirection(DcMotor.Direction.FORWARD);
-        driveFRM.setDirection(DcMotor.Direction.REVERSE);
-        driveBLM.setDirection(DcMotor.Direction.FORWARD);
-        driveBRM.setDirection(DcMotor.Direction.REVERSE);
+            //set motor directions
+            driveFLM.setDirection(DcMotor.Direction.FORWARD);
+            driveFRM.setDirection(DcMotor.Direction.REVERSE);
+            driveBLM.setDirection(DcMotor.Direction.FORWARD);
+            driveBRM.setDirection(DcMotor.Direction.REVERSE);
 
-        //set motors for encoders
-        driveFLM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveFRM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveBLM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveBRM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            //set motors for encoders
+            driveFLM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            driveFRM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            driveBLM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            driveBRM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
 
         waitForStart();
         //what runs
-        driveForwardE(0.5, 400);
-        moveLeftE(0.5, 1400);
-        moveLeftE(0.1, 100);
-        waffleForeS.setPosition(0);
-        waffleBackS.setPosition(1);
+        waffleForeS.setPosition(0.55);
+        waffleBackS.setPosition(0.60);
 
-        moveRghtE(0.5, 1500);
-        waffleForeS.setPosition(0.5);
-        waffleBackS.setPosition(0.5);
+        driveForwardE(0.5, 650);
+        moveLeftE(0.9, 1400);
+        moveLeftE(0.1, 200);
 
-        Thread.sleep(20000);
-        driveBackwardE(0.5, 500);
-        moveLeftE(0.5, 200);
-        spinLeftE(0.5, 900);
+        waffleForeS.setPosition(0.05);
+        waffleBackS.setPosition(0.95);
+        Thread.sleep(2000);
 
-        if (robotDS.getDistance(DistanceUnit.CM) < 25) {
-            driveForwardE(0.5, 1000);
-            if (robotDS.getDistance(DistanceUnit.CM) < 25) {
+        moveRghtE(0.5, 1900);
+        spinRghtE(0.5, 1000);
+        driveBackwardE(.1, 100);
+        waffleForeS.setPosition(0.55);
+        waffleBackS.setPosition(0.60);
+
+        Thread.sleep(14000);
+
+        moveRghtE(0.5, 600);
+        spinRghtE(0.5, 1800);
+        driveBackwardE(0.5, 400);
+        moveLeftE(0.5, 400);
+
+        telemetry.addData("distance sensed", robotDS.getDistance(DistanceUnit.CM));
+        telemetry.update();
+
+        if (robotDS.getDistance(DistanceUnit.CM) < 30) {
+            telemetry.update();
+            driveForwardE(0.5, 900);
+            if (robotDS.getDistance(DistanceUnit.CM) < 30) {
+                telemetry.update();
                 //if it senses something both places
-                driveBackwardE(0.5, 1000);
-                moveLeftE(1, 700);
+                driveBackwardE(1, 900);
+                moveLeftE(1, 900);
             }else {
+                telemetry.update();
                 //if it senses nothing
-                moveLeftE(0.5, 700);
+                moveLeftE(1, 900);
             }
         }else {
+            telemetry.update();
             //if it senses nothing
-            moveLeftE(0.5, 700);
+            moveLeftE(1, 900);
         }
 
     }

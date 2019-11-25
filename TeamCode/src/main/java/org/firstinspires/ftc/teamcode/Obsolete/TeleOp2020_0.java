@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Obsolete;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @TeleOp(name = "TeleOp2020_0", group = "Sample")
+@Disabled
 public class TeleOp2020_0 extends LinearOpMode{
 
     //declare motors
