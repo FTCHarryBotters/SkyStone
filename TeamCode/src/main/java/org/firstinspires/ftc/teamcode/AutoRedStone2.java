@@ -13,8 +13,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name = "AutoBluStone1", group = "Sample")
-public class AutoBluStone1 extends LinearOpMode {
+@Autonomous(name = "AutoRedStone2", group = "Sample")
+public class AutoRedStone2 extends LinearOpMode {
 
     //declare motors
     private boolean isSkystone = false;
@@ -30,12 +30,14 @@ public class AutoBluStone1 extends LinearOpMode {
     private Servo skystoneForeS;
     private Servo skystoneBackS;
     private Servo armS;
+    private Servo succLeftS;
+    private Servo succRghtS;
 
     //declare distance sensors (DS)
     private DistanceSensor wallLCDS;
     private DistanceSensor wallLBDS;
-    private DistanceSensor wallRearDS;
-    
+    private DistanceSensor wallForeDS;
+
     //declare color sensor (CS) and related variables
     private ColorSensor stoneForeCS;
     float hsvValues[] = {0F, 0F, 0F};
@@ -61,6 +63,8 @@ public class AutoBluStone1 extends LinearOpMode {
             //initialize servos
             skystoneForeS = hardwareMap.servo.get("skystoneFrontS");
             skystoneBackS = hardwareMap.servo.get("skystoneBackS");
+            succLeftS = hardwareMap.servo.get("succLeftS");
+            succRghtS = hardwareMap.servo.get("succRightS");
             armS      = hardwareMap.servo.get("armS");
 
             //set motor directions
@@ -78,7 +82,7 @@ public class AutoBluStone1 extends LinearOpMode {
             //initialize distance sensors
             wallLCDS = hardwareMap.get(DistanceSensor.class, "robotDS");
             wallLBDS = hardwareMap.get(DistanceSensor.class, "wallDS");
-            wallRearDS = hardwareMap.get(DistanceSensor.class, "wallRearDS");
+            wallForeDS = hardwareMap.get(DistanceSensor.class, "stoneDS");
 
             //initialize Color sensor
             stoneForeCS = hardwareMap.colorSensor.get("stoneFrontCS");
@@ -86,120 +90,69 @@ public class AutoBluStone1 extends LinearOpMode {
 
         waitForStart();
 
-        armS.setPosition(0.5);
-        moveRghtE(0.5, 1200);
+        succLeftS.setPosition(0.5);
+        succRghtS.setPosition(0.5);
+        moveRghtE(0.5, 1175);
+
+        armS.setPosition(0.35);
+        Thread.sleep(500);
+        armS.setPosition(0.65);
         checkStones();
 
         if (robotWhere == 0) {
-            driveRearDS(0.2, 82);
+            driveForwardE(0.5, 400);
+            driveForeDS(0.15, 103);
 
-            skystoneForeS.setPosition(0.5);
-            Thread.sleep(1500);
-            moveLeftE(0.8, 700);
-
-            driveForwardE(0.8, 1800);
-            moveRghtE(0.8, 500);
-            skystoneForeS.setPosition(0);
-            Thread.sleep(500);
-
-            moveLeftE(0.8, 500);
-            driveBackwardE(0.8, 2450);
-
-            alignLeft(0.2, 33);
-            moveRghtE(0.5, 300);
-            alignLeft(0.2, 33);
-
-            driveRearDS(0.2, 46);
-            moveRghtE(0.8, 900);
             skystoneBackS.setPosition(0);
             Thread.sleep(1500);
-
             moveLeftE(0.8, 700);
-            driveForwardE(0.8, 2600);
+
+            driveBackwardE(0.8, 1800);
             moveRghtE(0.8, 500);
             skystoneBackS.setPosition(0.4);
             Thread.sleep(500);
 
-            driveBackwardE(0.8, 500);
+            moveLeftE(0.8, 500);
+            driveForwardE(0.8, 2450);
+            spinRghtE(0.5, 90);
+
+            alignLeft(0.2, 33);
+            moveRghtE(0.5, 150);
+            alignLeft(0.2, 33);
+            moveRghtE(0.5, 150);
+            alignLeft(0.1, 33);
+
+            driveForeDS(0.2, 64);
+            moveRghtE(0.5, 825);
+            skystoneForeS.setPosition(0.5);
+            Thread.sleep(1500);
+
+            moveLeftE(0.8, 700);
+            driveBackwardE(0.8, 2800);
+            moveRghtE(0.8, 500);
+            skystoneForeS.setPosition(0);
+            Thread.sleep(500);
+
+            driveForwardE(0.8, 700);
             moveRghtE(0.8, 200);
         }
         if (robotWhere == 1) {
-            driveRearDS(0.2, 62);
-
-            skystoneForeS.setPosition(0.5);
-            Thread.sleep(1500);
-            moveLeftE(0.8, 700);
-
-            driveForwardE(0.8, 2200);
-            moveRghtE(0.8, 500);
-            skystoneForeS.setPosition(0);
-            Thread.sleep(500);
-
-            moveLeftE(0.8, 500);
-            driveBackwardE(0.8, 2850);
-
-            alignLeft(0.2, 33);
-            moveRghtE(0.5, 300);
-            alignLeft(0.2, 33);
-
-            driveRearDS(0.2, 27);
-            moveRghtE(0.8, 900);
-            skystoneBackS.setPosition(0);
-            Thread.sleep(1500);
-
-            moveLeftE(0.8, 700);
-            driveForwardE(0.8, 3100);
-            moveRghtE(0.8, 500);
-            skystoneBackS.setPosition(0.4);
-            Thread.sleep(500);
-
-            driveBackwardE(0.8, 700);
-            moveRghtE(0.8, 200);
+            
         }
         if (robotWhere == 2) {
-            driveRearDS(0.2, 41);
-
-            skystoneForeS.setPosition(0.5);
-            Thread.sleep(1500);
-            moveLeftE(0.8, 700);
-
-            driveForwardE(0.8, 2600);
-            moveRghtE(0.8, 500);
-            skystoneForeS.setPosition(0);
-            Thread.sleep(500);
-
-            moveLeftE(0.8, 500);
-            driveBackwardE(0.8, 3250);
-
-            moveRghtE(0.8, 900);
-            driveRearDS(0.2, 5);
-            driveBackwardE(0.8, 150);
-            skystoneBackS.setPosition(0);
-            Thread.sleep(1500);
-
-            moveLeftE(0.8, 700);
-            driveForwardE(0.8, 3400);
-            moveRghtE(0.8, 500);
-            skystoneBackS.setPosition(0.4);
-            Thread.sleep(500);
-
-            driveBackwardE(0.8, 500);
-            moveRghtE(0.8, 200);
+            
         }
-        
-
     }
-    private void driveRearDS(double power, int wallDistance) {
-        telemetry.addData("distance", wallRearDS.getDistance(DistanceUnit.CM));
+    private void driveForeDS(double power, int wallDistance) {
+        telemetry.addData("distance", wallForeDS.getDistance(DistanceUnit.CM));
         telemetry.update();
+        if (wallForeDS.getDistance(DistanceUnit.CM) >= wallDistance) {
+            driveFLM.setPower(power);
+            driveFRM.setPower(power);
+            driveBLM.setPower(power);
+            driveBRM.setPower(power);
 
-        if (wallRearDS.getDistance(DistanceUnit.CM) >= wallDistance) {
-            driveFLM.setPower(-power);
-            driveFRM.setPower(-power);
-            driveBLM.setPower(-power);
-            driveBRM.setPower(-power);
-
-            while (wallRearDS.getDistance(DistanceUnit.CM) > wallDistance) {
+            while (wallForeDS.getDistance(DistanceUnit.CM) > wallDistance) {
                 telemetry.update();
             }
 
@@ -208,12 +161,12 @@ public class AutoBluStone1 extends LinearOpMode {
             driveBLM.setPower(0);
             driveBRM.setPower(0);
         }else {
-            driveFLM.setPower(power);
-            driveFRM.setPower(power);
-            driveBLM.setPower(power);
-            driveBRM.setPower(power);
+            driveFLM.setPower(-power);
+            driveFRM.setPower(-power);
+            driveBLM.setPower(-power);
+            driveBRM.setPower(-power);
 
-            while (wallRearDS.getDistance(DistanceUnit.CM) < wallDistance) {
+            while (wallForeDS.getDistance(DistanceUnit.CM) < wallDistance) {
                 telemetry.update();
             }
 
@@ -226,17 +179,17 @@ public class AutoBluStone1 extends LinearOpMode {
     public void alignLeft(double power, int distanceCM) {
         double distC=wallLCDS.getDistance(DistanceUnit.CM);//saves distance measurement
         double distB=wallLBDS.getDistance(DistanceUnit.CM);//saves distance measurement
-        
-        
+
+
         while (distC>distanceCM || distB>distanceCM) {       //checks if we've reached dist from wall
-            
+
             distC = wallLCDS.getDistance(DistanceUnit.CM); //re-saves distance measurement
             distB = wallLBDS.getDistance(DistanceUnit.CM); //re-saves distance measurement
-            
+
             telemetry.addData("FLS", distC);
             telemetry.addData("BLS", distB);
             telemetry.update();
-            
+
             if (distC>distanceCM) {                               //checks if we've reached distance
                 driveFLM.setPower(-power);                       //moves motors
                 driveFRM.setPower(+power);                       //moves motors
@@ -244,7 +197,7 @@ public class AutoBluStone1 extends LinearOpMode {
                 driveFLM.setPower(0);
                 driveFRM.setPower(0);
             }
-            
+
             if (distB>distanceCM) {                               //checks if we've reached distance
                 driveBLM.setPower(+power);                       //moves motors
                 driveBRM.setPower(-power);                       //moves motors
@@ -254,7 +207,7 @@ public class AutoBluStone1 extends LinearOpMode {
             }
         }
     }
-    private void getSkystone() {
+    private void getSkystone() throws InterruptedException {
 
         Color.RGBToHSV(
         (int) (stoneForeCS.red() * SCALE_FACTOR),
@@ -275,21 +228,21 @@ public class AutoBluStone1 extends LinearOpMode {
 
         if (hsvValues[0]>120) {isSkystone = true;}
     }
-    private void checkStones() {
+    private void checkStones() throws InterruptedException {
         while (!isSkystone&&tries<2) {
             tries++;
             robotWhere = 0;
             getSkystone();
             if (!isSkystone) {
-                driveBackwardE(0.3, 350);
+                driveForwardE(0.3, 350);
                 robotWhere = 1;
                 getSkystone();
                 if (!isSkystone) {
-                    driveBackwardE(0.3, 350);
+                    driveForwardE(0.3, 350);
                     robotWhere = 2;
                     getSkystone();
                     if (!isSkystone) {
-                        driveForwardE(0.3, 700);
+                        driveBackwardE(0.3, 700);
                         robotWhere = 0;
                     }
                 }
@@ -557,7 +510,8 @@ public class AutoBluStone1 extends LinearOpMode {
         driveBRM.setPower(power);
 
         //wait until target position
-        while (driveFLM.isBusy() && driveFRM.isBusy() && driveBLM.isBusy() && driveBRM.isBusy()) {
+        while (driveFLM.isBusy() && driveFRM.isBusy() && driveBLM.isBusy() && driveBRM.isBusy())
+        {
 
         }
 

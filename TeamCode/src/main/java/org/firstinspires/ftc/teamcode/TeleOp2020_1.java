@@ -187,8 +187,8 @@ public class TeleOp2020_1 extends LinearOpMode{
 
 
             if (gamepad1.dpad_left) {
-                waffleForeS.setPosition(0.55);
-                waffleBackS.setPosition(0.60);
+                waffleForeS.setPosition(0.05);
+                waffleBackS.setPosition(0.95);
             }else {
                 if (gamepad1.dpad_right) {
                     waffleForeS.setPosition(0.55);
