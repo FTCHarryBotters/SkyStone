@@ -53,14 +53,14 @@ public class TeleOp2020_1 extends LinearOpMode{
             verticalM  = hardwareMap.dcMotor.get("verticalM");
 
             //configure swervos
-            succLeftS = hardwareMap.servo.get("succLeftS");
-            succRghtS = hardwareMap.servo.get("succRightS");
-            armS      = hardwareMap.servo.get("armS");
-            stoneS    = hardwareMap.servo.get("stoneS");
+            succLeftS     = hardwareMap.servo.get("succLeftS");
+            succRghtS     = hardwareMap.servo.get("succRightS");
+            armS          = hardwareMap.servo.get("armS");
+            stoneS        = hardwareMap.servo.get("stoneS");
             skystoneForeS = hardwareMap.servo.get("skystoneFrontS");
             skystoneBackS = hardwareMap.servo.get("skystoneBackS");
-            waffleForeS = hardwareMap.servo.get("waffleFrontS");
-            waffleBackS = hardwareMap.servo.get("waffleBackS");
+            waffleForeS   = hardwareMap.servo.get("waffleFrontS");
+            waffleBackS   = hardwareMap.servo.get("waffleBackS");
 
             //configure distance detector
             stoneDS = hardwareMap.get(DistanceSensor.class, "stoneDS");

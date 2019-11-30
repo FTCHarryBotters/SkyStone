@@ -21,6 +21,7 @@ public class AutoRedWaffle0 extends LinearOpMode {
     //declare servos
     private Servo waffleForeS;
     private Servo waffleBackS;
+    private Servo armS;
 
     //declare sensors
     private DistanceSensor robotDS;
@@ -38,6 +39,7 @@ public class AutoRedWaffle0 extends LinearOpMode {
             //init servos
             waffleForeS = hardwareMap.servo.get("waffleFrontS");
             waffleBackS = hardwareMap.servo.get("waffleBackS");
+            armS        = hardwareMap.servo.get("armS");
 
             //declare sensor of destance
             robotDS = hardwareMap.get(DistanceSensor.class, "robotDS");
@@ -59,6 +61,7 @@ public class AutoRedWaffle0 extends LinearOpMode {
         //what runs
         waffleForeS.setPosition(0.55);
         waffleBackS.setPosition(0.60);
+        armS.setPosition(0.55);
 
         driveForwardE(0.5, 650);
         moveLeftE(0.9, 1400);
@@ -74,9 +77,11 @@ public class AutoRedWaffle0 extends LinearOpMode {
         waffleForeS.setPosition(0.55);
         waffleBackS.setPosition(0.60);
 
-        Thread.sleep(14000);
+        Thread.sleep(10000);
 
         moveRghtE(0.5, 600);
+        waffleForeS.setPosition(0.05);
+        waffleBackS.setPosition(0.95);
         spinRghtE(0.5, 1800);
         driveBackwardE(0.5, 400);
         moveLeftE(0.5, 400);
@@ -91,16 +96,16 @@ public class AutoRedWaffle0 extends LinearOpMode {
                 telemetry.update();
                 //if it senses something both places
                 driveBackwardE(1, 900);
-                moveLeftE(1, 900);
+                moveLeftE(1, 1000);
             }else {
                 telemetry.update();
                 //if it senses nothing
-                moveLeftE(1, 900);
+                moveLeftE(1, 1000);
             }
         }else {
             telemetry.update();
             //if it senses nothing
-            moveLeftE(1, 900);
+            moveLeftE(1, 1000);
         }
 
     }

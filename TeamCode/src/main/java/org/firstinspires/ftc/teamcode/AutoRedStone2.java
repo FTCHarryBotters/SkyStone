@@ -63,9 +63,9 @@ public class AutoRedStone2 extends LinearOpMode {
             //initialize servos
             skystoneForeS = hardwareMap.servo.get("skystoneFrontS");
             skystoneBackS = hardwareMap.servo.get("skystoneBackS");
-            succLeftS = hardwareMap.servo.get("succLeftS");
-            succRghtS = hardwareMap.servo.get("succRightS");
-            armS      = hardwareMap.servo.get("armS");
+            succLeftS     = hardwareMap.servo.get("succLeftS");
+            succRghtS     = hardwareMap.servo.get("succRightS");
+            armS          = hardwareMap.servo.get("armS");
 
             //set motor directions
             driveFLM.setDirection(DcMotor.Direction.FORWARD);
@@ -80,8 +80,8 @@ public class AutoRedStone2 extends LinearOpMode {
             driveBRM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             //initialize distance sensors
-            wallLCDS = hardwareMap.get(DistanceSensor.class, "robotDS");
-            wallLBDS = hardwareMap.get(DistanceSensor.class, "wallDS");
+            wallLCDS   = hardwareMap.get(DistanceSensor.class, "robotDS");
+            wallLBDS   = hardwareMap.get(DistanceSensor.class, "wallDS");
             wallForeDS = hardwareMap.get(DistanceSensor.class, "stoneDS");
 
             //initialize Color sensor
@@ -101,7 +101,7 @@ public class AutoRedStone2 extends LinearOpMode {
 
         if (robotWhere == 0) {
             driveForwardE(0.5, 400);
-            driveForeDS(0.15, 103);
+            driveForeDS(0.1, 100);
 
             skystoneBackS.setPosition(0);
             Thread.sleep(1500);
@@ -119,10 +119,8 @@ public class AutoRedStone2 extends LinearOpMode {
             alignLeft(0.2, 33);
             moveRghtE(0.5, 150);
             alignLeft(0.2, 33);
-            moveRghtE(0.5, 150);
-            alignLeft(0.1, 33);
 
-            driveForeDS(0.2, 64);
+            driveForeDS(0.1, 61);
             moveRghtE(0.5, 825);
             skystoneForeS.setPosition(0.5);
             Thread.sleep(1500);
@@ -133,14 +131,89 @@ public class AutoRedStone2 extends LinearOpMode {
             skystoneForeS.setPosition(0);
             Thread.sleep(500);
 
+            moveLeftE(0.8, 200);
             driveForwardE(0.8, 700);
-            moveRghtE(0.8, 200);
+            moveRghtE(0.8, 400);
         }
         if (robotWhere == 1) {
-            
+            driveForwardE(0.5, 400);
+            driveForeDS(0.1, 84);
+
+            skystoneBackS.setPosition(0);
+            Thread.sleep(1500);
+            moveLeftE(0.8, 700);
+
+            driveBackwardE(0.8, 2150);
+            moveRghtE(0.8, 500);
+            skystoneBackS.setPosition(0.4);
+            Thread.sleep(500);
+
+            moveLeftE(0.8, 500);
+            driveForwardE(0.8, 2800);
+            spinRghtE(0.5, 90);
+
+            alignLeft(0.2, 33);
+            moveRghtE(0.5, 150);
+            alignLeft(0.2, 33);
+
+            driveForeDS(0.1, 45);
+            moveRghtE(0.5, 825);
+            skystoneForeS.setPosition(0.5);
+            Thread.sleep(1500);
+
+            moveLeftE(0.8, 700);
+            driveBackwardE(0.8, 3150);
+            moveRghtE(0.8, 500);
+            skystoneForeS.setPosition(0);
+            Thread.sleep(500);
+
+            moveLeftE(0.8, 200);
+            driveForwardE(0.8, 700);
+            moveRghtE(0.8, 400);
         }
         if (robotWhere == 2) {
-            
+            driveForwardE(0.5, 400);
+            driveForeDS(0.1, 65);
+
+            skystoneBackS.setPosition(0);
+            Thread.sleep(1500);
+            moveLeftE(0.8, 700);
+
+            driveBackwardE(0.8, 2350);
+            moveRghtE(0.8, 500);
+            skystoneBackS.setPosition(0.4);
+            Thread.sleep(500);
+
+            moveLeftE(0.8, 500);
+            driveForwardE(0.8, 2600);
+            spinRghtE(0.5, 90);
+
+            alignLeft(0.2, 33);
+            moveRghtE(0.5, 150);
+            alignLeft(0.2, 33);
+            moveRghtE(0.5, 150);
+            alignLeft(0.2, 33);
+
+            driveForeDS(0.1, 45);
+            succLeftS.setPosition(1);
+            succRghtS.setPosition(0);
+            moveRghtE(0.5, 825);
+            driveForwardE(0.8, 350);
+            spinLeftE(0.5, 100);
+            moveRghtE(0.8, 50);
+            skystoneForeS.setPosition(0.5);
+            Thread.sleep(1500);
+
+            spinRghtE(0.8, 100);
+            moveLeftE(0.8, 400);
+            driveBackwardE(0.8, 3150);
+            moveRghtE(0.8, 500);
+            skystoneForeS.setPosition(0);
+            Thread.sleep(500);
+
+            moveLeftE(0.8, 200);
+            driveForwardE(0.8, 700);
+            moveRghtE(0.8, 400);
         }
     }
     private void driveForeDS(double power, int wallDistance) {

@@ -61,7 +61,7 @@ public class AutoBluStone1 extends LinearOpMode {
             //initialize servos
             skystoneForeS = hardwareMap.servo.get("skystoneFrontS");
             skystoneBackS = hardwareMap.servo.get("skystoneBackS");
-            armS      = hardwareMap.servo.get("armS");
+            armS          = hardwareMap.servo.get("armS");
 
             //set motor directions
             driveFLM.setDirection(DcMotor.Direction.FORWARD);
@@ -76,8 +76,8 @@ public class AutoBluStone1 extends LinearOpMode {
             driveBRM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             //initialize distance sensors
-            wallLCDS = hardwareMap.get(DistanceSensor.class, "robotDS");
-            wallLBDS = hardwareMap.get(DistanceSensor.class, "wallDS");
+            wallLCDS   = hardwareMap.get(DistanceSensor.class, "robotDS");
+            wallLBDS   = hardwareMap.get(DistanceSensor.class, "wallDS");
             wallRearDS = hardwareMap.get(DistanceSensor.class, "wallRearDS");
 
             //initialize Color sensor
@@ -86,8 +86,10 @@ public class AutoBluStone1 extends LinearOpMode {
 
         waitForStart();
 
-        armS.setPosition(0.5);
         moveRghtE(0.5, 1200);
+        armS.setPosition(0.35);
+        Thread.sleep(500);
+        armS.setPosition(0.65);
         checkStones();
 
         if (robotWhere == 0) {

@@ -21,6 +21,7 @@ public class AutoBluWaffle0 extends LinearOpMode {
     //declare servos
     private Servo waffleForeS;
     private Servo waffleBackS;
+    private Servo armS;
 
     //declare sensors
     private DistanceSensor robotDS;
@@ -38,6 +39,7 @@ public class AutoBluWaffle0 extends LinearOpMode {
             //init servos
             waffleForeS = hardwareMap.servo.get("waffleFrontS");
             waffleBackS = hardwareMap.servo.get("waffleBackS");
+            armS        = hardwareMap.servo.get("armS");
 
             //declare sensor of destance
             robotDS = hardwareMap.get(DistanceSensor.class, "robotDS");
@@ -60,6 +62,7 @@ public class AutoBluWaffle0 extends LinearOpMode {
 
         waffleForeS.setPosition(0.55);
         waffleBackS.setPosition(0.60);
+        armS.setPosition(0.55);
 
         driveBackwardE(0.5, 900);
         moveLeftE(0.5, 1400);
@@ -70,18 +73,26 @@ public class AutoBluWaffle0 extends LinearOpMode {
         Thread.sleep(2000);
 
         spinLeftE(0.5, 200);
-        moveRghtE(0.5, 2000);
-        spinLeftE(0.5, 1000);
+        moveRghtE(0.8, 2000);
+        spinLeftE(0.8, 600);
+        driveForwardE(0.5, 400);
+        moveRghtE(0.8, 400);
+        spinLeftE(0.8, 700);
+        moveLeftE(1.0, 600);
+
         driveForwardE(0.5, 100);
         waffleForeS.setPosition(0.55);
         waffleBackS.setPosition(0.60);
 
-        Thread.sleep(12000);
+        Thread.sleep(9000);
 
         moveRghtE(0.5, 200);
+        driveBackwardE(0.8, 800);
+        driveForwardE(0.8, 300);
         spinRghtE(0.5, 1800);
+        waffleForeS.setPosition(0.05);
+        waffleBackS.setPosition(0.95);
         moveLeftE(0.5, 1000);
-        driveForwardE(0.5, 300);
 
         telemetry.addData("distance sensed", robotDS.getDistance(DistanceUnit.CM));
         telemetry.update();
@@ -93,16 +104,16 @@ public class AutoBluWaffle0 extends LinearOpMode {
                 telemetry.update();
                 //if it senses something both places
                 driveForwardE(1, 900);
-                moveLeftE(1, 700);
+                moveLeftE(1, 900);
             }else {
                 telemetry.update();
                 //if it senses nothing
-                moveLeftE(1, 700);
+                moveLeftE(1, 900);
             }
         }else {
             telemetry.update();
             //if it senses nothing
-            moveLeftE(1, 700);
+            moveLeftE(1, 900);
         }
 
     }
