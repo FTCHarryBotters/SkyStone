@@ -86,10 +86,8 @@ public class AutoBluStone1 extends LinearOpMode {
 
         waitForStart();
 
+        armS.setPosition(0.55);
         moveRghtE(0.5, 1200);
-        armS.setPosition(0.35);
-        Thread.sleep(500);
-        armS.setPosition(0.65);
         checkStones();
 
         if (robotWhere == 0) {
@@ -117,12 +115,12 @@ public class AutoBluStone1 extends LinearOpMode {
             Thread.sleep(1500);
 
             moveLeftE(0.8, 700);
-            driveForwardE(0.8, 2600);
+            driveForwardE(0.8, 2800);
             moveRghtE(0.8, 500);
             skystoneBackS.setPosition(0.4);
             Thread.sleep(500);
 
-            driveBackwardE(0.8, 500);
+            driveBackwardE(0.8, 700);
             moveRghtE(0.8, 200);
         }
         if (robotWhere == 1) {
@@ -144,7 +142,7 @@ public class AutoBluStone1 extends LinearOpMode {
             moveRghtE(0.5, 300);
             alignLeft(0.2, 33);
 
-            driveRearDS(0.2, 27);
+            driveRearDS(0.2, 32);
             moveRghtE(0.8, 900);
             skystoneBackS.setPosition(0);
             Thread.sleep(1500);
@@ -173,9 +171,13 @@ public class AutoBluStone1 extends LinearOpMode {
             moveLeftE(0.8, 500);
             driveBackwardE(0.8, 3250);
 
-            moveRghtE(0.8, 900);
+            alignLeft(0.2, 33);
+            moveRghtE(0.5, 300);
+            alignLeft(0.2, 33);
+
+            moveRghtE(0.8, 1000);
             driveRearDS(0.2, 5);
-            driveBackwardE(0.8, 150);
+            driveBackwardE(0.5, 100);
             skystoneBackS.setPosition(0);
             Thread.sleep(1500);
 
@@ -185,6 +187,7 @@ public class AutoBluStone1 extends LinearOpMode {
             skystoneBackS.setPosition(0.4);
             Thread.sleep(500);
 
+            moveLeftE(0.8, 200);
             driveBackwardE(0.8, 500);
             moveRghtE(0.8, 200);
         }
@@ -202,6 +205,7 @@ public class AutoBluStone1 extends LinearOpMode {
             driveBRM.setPower(-power);
 
             while (wallRearDS.getDistance(DistanceUnit.CM) > wallDistance) {
+                telemetry.addData("distance", wallRearDS.getDistance(DistanceUnit.CM));
                 telemetry.update();
             }
 
@@ -216,6 +220,7 @@ public class AutoBluStone1 extends LinearOpMode {
             driveBRM.setPower(power);
 
             while (wallRearDS.getDistance(DistanceUnit.CM) < wallDistance) {
+                telemetry.addData("distance", wallRearDS.getDistance(DistanceUnit.CM));
                 telemetry.update();
             }
 

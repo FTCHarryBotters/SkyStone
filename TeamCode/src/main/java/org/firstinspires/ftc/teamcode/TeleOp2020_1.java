@@ -194,18 +194,18 @@ public class TeleOp2020_1 extends LinearOpMode{
             }
 
             if (gamepad2.dpad_down) skystoneForeS.setPosition(0.5);
-            if (gamepad2.dpad_up)   skystoneForeS.setPosition(0.0);
+            if (gamepad2.dpad_up)   skystoneForeS.setPosition(0.1);
             if (gamepad2.x)         skystoneBackS.setPosition(0.0);
             if (gamepad2.y)         skystoneBackS.setPosition(0.4);
 
 
             if (gamepad1.dpad_left) {
-                waffleForeS.setPosition(0.05);
-                waffleBackS.setPosition(0.95);
+                waffleForeS.setPosition(0.70);
+                waffleBackS.setPosition(0.13);
             }else {
                 if (gamepad1.dpad_right) {
-                    waffleForeS.setPosition(0.55);
-                    waffleBackS.setPosition(0.60);
+                    waffleForeS.setPosition(0.32);
+                    waffleBackS.setPosition(0.55);
                 }
             }
 
@@ -306,12 +306,12 @@ public class TeleOp2020_1 extends LinearOpMode{
 
 
                     if (gamepad1.dpad_left) {
-                        waffleForeS.setPosition(0.05);
-                        waffleBackS.setPosition(0.95);
+                        waffleForeS.setPosition(1.0);
+                        waffleBackS.setPosition(0.0);
                     }else {
                         if (gamepad1.dpad_right) {
-                            waffleForeS.setPosition(0.55);
-                            waffleBackS.setPosition(0.60);
+                            waffleForeS.setPosition(0.4);
+                            waffleBackS.setPosition(0.6);
                         }
                     }
                 }

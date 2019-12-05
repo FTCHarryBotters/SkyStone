@@ -59,31 +59,28 @@ public class AutoRedWaffle0 extends LinearOpMode {
 
         waitForStart();
         //what runs
-        waffleForeS.setPosition(0.55);
-        waffleBackS.setPosition(0.60);
+        waffleup();
         armS.setPosition(0.55);
 
         driveForwardE(0.5, 650);
         moveLeftE(0.9, 1400);
         moveLeftE(0.1, 200);
 
-        waffleForeS.setPosition(0.05);
-        waffleBackS.setPosition(0.95);
+        waffledown();
         Thread.sleep(2000);
 
         moveRghtE(0.5, 1900);
         spinRghtE(0.5, 1000);
         driveBackwardE(.1, 100);
-        waffleForeS.setPosition(0.55);
-        waffleBackS.setPosition(0.60);
+        waffleup();
 
         Thread.sleep(10000);
 
         moveRghtE(0.5, 600);
-        waffleForeS.setPosition(0.05);
-        waffleBackS.setPosition(0.95);
+        waffledown();
         spinRghtE(0.5, 1800);
-        driveBackwardE(0.5, 400);
+        driveBackwardE(0.5, 500);
+        driveForwardE(0.8, 250);
         moveLeftE(0.5, 400);
 
         telemetry.addData("distance sensed", robotDS.getDistance(DistanceUnit.CM));
@@ -97,6 +94,7 @@ public class AutoRedWaffle0 extends LinearOpMode {
                 //if it senses something both places
                 driveBackwardE(1, 900);
                 moveLeftE(1, 1000);
+                driveBackwardE(0.5, 200);
             }else {
                 telemetry.update();
                 //if it senses nothing
@@ -106,10 +104,19 @@ public class AutoRedWaffle0 extends LinearOpMode {
             telemetry.update();
             //if it senses nothing
             moveLeftE(1, 1000);
+            driveBackwardE(0.5, 200);
         }
 
     }
     //methods
+    public void waffledown() {
+        waffleForeS.setPosition(0.32);
+        waffleBackS.setPosition(0.55);
+    }
+    public void waffleup() {
+        waffleForeS.setPosition(0.70);
+        waffleBackS.setPosition(0.13);
+    }
     public void driveForwardE(double power, int ticks) {
         //Reset Encoders
         driveFLM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
