@@ -60,7 +60,7 @@ public class AutoRedWaffle0 extends LinearOpMode {
         waitForStart();
         //what runs
         waffleup();
-        armS.setPosition(0.55);
+        armS.setPosition(0.65);
 
         driveForwardE(0.5, 650);
         moveLeftE(0.9, 1400);
@@ -69,8 +69,9 @@ public class AutoRedWaffle0 extends LinearOpMode {
         waffledown();
         Thread.sleep(2000);
 
-        moveRghtE(0.5, 1900);
-        spinRghtE(0.5, 1000);
+        spinRghtE(0.8, 150);
+        moveRghtE(0.5, 1700);
+        spinRghtE(0.5, 800);
         driveBackwardE(.1, 100);
         waffleup();
 
@@ -98,7 +99,7 @@ public class AutoRedWaffle0 extends LinearOpMode {
             }else {
                 telemetry.update();
                 //if it senses nothing
-                moveLeftE(1, 1000);
+                moveLeftE(0.6, 1000);
             }
         }else {
             telemetry.update();

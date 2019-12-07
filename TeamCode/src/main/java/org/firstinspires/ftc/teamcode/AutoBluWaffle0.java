@@ -61,7 +61,7 @@ public class AutoBluWaffle0 extends LinearOpMode {
         //what runs
 
         waffleup();
-        armS.setPosition(0.55);
+        armS.setPosition(0.65);
 
         driveBackwardE(0.5, 900);
         moveLeftE(0.5, 1400);
@@ -70,18 +70,18 @@ public class AutoBluWaffle0 extends LinearOpMode {
         waffledown();
         Thread.sleep(2000);
 
-        spinLeftE(0.5, 200);
-        moveRghtE(0.8, 2000);
-        spinLeftE(0.8, 600);
+        spinLeftE(0.5, 250);
+        moveRghtE(0.7, 1900);
+        spinLeftE(0.7, 500);
         driveForwardE(0.5, 400);
-        moveRghtE(0.8, 400);
-        spinLeftE(0.8, 500);
+        moveRghtE(0.7, 600);
+        spinLeftE(0.7, 500);
         moveLeftE(1.0, 600);
 
         driveForwardE(0.5, 100);
         waffleup();
 
-        Thread.sleep(9000);
+        Thread.sleep(6000);
 
         moveRghtE(0.5, 400);
         driveBackwardE(0.5, 800);
@@ -100,16 +100,19 @@ public class AutoBluWaffle0 extends LinearOpMode {
                 telemetry.update();
                 //if it senses something both places
                 driveForwardE(1, 900);
-                moveLeftE(1, 800);
+                spinRghtE(0.8, 900);
+                driveBackwardE(0.4, 400);
             }else {
                 telemetry.update();
                 //if it senses nothing
-                moveLeftE(1, 800);
+                spinRghtE(0.8, 900);
+                driveBackwardE(0.4, 400);
             }
         }else {
             telemetry.update();
             //if it senses nothing
-            moveLeftE(1, 800);
+            spinRghtE(0.8, 900);
+            driveBackwardE(0.4, 400);
         }
 
     }

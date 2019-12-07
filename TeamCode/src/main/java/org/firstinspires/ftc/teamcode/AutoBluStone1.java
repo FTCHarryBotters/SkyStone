@@ -86,12 +86,12 @@ public class AutoBluStone1 extends LinearOpMode {
 
         waitForStart();
 
-        armS.setPosition(0.55);
+        armS.setPosition(0.65);
         moveRghtE(0.5, 1200);
         checkStones();
 
         if (robotWhere == 0) {
-            driveRearDS(0.2, 82);
+            driveRearDS(0.1, 85);
 
             skystoneForeS.setPosition(0.5);
             Thread.sleep(1500);
@@ -109,7 +109,7 @@ public class AutoBluStone1 extends LinearOpMode {
             moveRghtE(0.5, 300);
             alignLeft(0.2, 33);
 
-            driveRearDS(0.2, 46);
+            driveRearDS(0.1, 47);
             moveRghtE(0.8, 900);
             skystoneBackS.setPosition(0);
             Thread.sleep(1500);
@@ -120,30 +120,31 @@ public class AutoBluStone1 extends LinearOpMode {
             skystoneBackS.setPosition(0.4);
             Thread.sleep(500);
 
+            moveLeftE(0.8, 300);
             driveBackwardE(0.8, 700);
             moveRghtE(0.8, 200);
         }
         if (robotWhere == 1) {
-            driveRearDS(0.2, 62);
+            driveRearDS(0.1, 66);
 
             skystoneForeS.setPosition(0.5);
             Thread.sleep(1500);
             moveLeftE(0.8, 700);
 
             driveForwardE(0.8, 2200);
-            moveRghtE(0.8, 500);
+            moveRghtE(0.8, 300);
             skystoneForeS.setPosition(0);
             Thread.sleep(500);
 
-            moveLeftE(0.8, 500);
+            moveLeftE(0.8, 300);
             driveBackwardE(0.8, 2850);
 
             alignLeft(0.2, 33);
             moveRghtE(0.5, 300);
             alignLeft(0.2, 33);
 
-            driveRearDS(0.2, 32);
-            moveRghtE(0.8, 900);
+            driveRearDS(0.1, 29);
+            moveRghtE(0.8, 800);
             skystoneBackS.setPosition(0);
             Thread.sleep(1500);
 
@@ -153,11 +154,11 @@ public class AutoBluStone1 extends LinearOpMode {
             skystoneBackS.setPosition(0.4);
             Thread.sleep(500);
 
-            driveBackwardE(0.8, 700);
+            driveBackwardE(0.8, 850);
             moveRghtE(0.8, 200);
         }
         if (robotWhere == 2) {
-            driveRearDS(0.2, 41);
+            driveRearDS(0.1, 44);
 
             skystoneForeS.setPosition(0.5);
             Thread.sleep(1500);
@@ -174,10 +175,12 @@ public class AutoBluStone1 extends LinearOpMode {
             alignLeft(0.2, 33);
             moveRghtE(0.5, 300);
             alignLeft(0.2, 33);
+            moveRghtE(0.5, 300);
+            alignLeft(0.2, 33);
 
-            moveRghtE(0.8, 1000);
-            driveRearDS(0.2, 5);
-            driveBackwardE(0.5, 100);
+            moveRghtE(0.6, 800);
+            driveRearDS(0.1, 5);
+            driveBackwardE(0.5, 0);
             skystoneBackS.setPosition(0);
             Thread.sleep(1500);
 
@@ -189,10 +192,7 @@ public class AutoBluStone1 extends LinearOpMode {
 
             moveLeftE(0.8, 200);
             driveBackwardE(0.8, 500);
-            moveRghtE(0.8, 200);
         }
-        
-
     }
     private void driveRearDS(double power, int wallDistance) {
         telemetry.addData("distance", wallRearDS.getDistance(DistanceUnit.CM));
