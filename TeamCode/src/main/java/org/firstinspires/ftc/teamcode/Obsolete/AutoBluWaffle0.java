@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Obsolete;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -9,8 +9,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous(name = "AutoRedWaffle0", group = "Sample")
-public class AutoRedWaffle0 extends LinearOpMode {
+@Autonomous(name = "AutoBluWaffle0", group = "Sample")
+@Disabled
+public class AutoBluWaffle0 extends LinearOpMode {
 
     //declare
     private DcMotor driveFLM;
@@ -59,53 +60,61 @@ public class AutoRedWaffle0 extends LinearOpMode {
 
         waitForStart();
         //what runs
+
         waffleup();
         armS.setPosition(0.65);
 
-        driveForwardE(0.5, 650);
-        moveLeftE(0.9, 1400);
+        driveBackwardE(0.5, 900);
+        moveLeftE(0.5, 1400);
         moveLeftE(0.1, 200);
 
         waffledown();
         Thread.sleep(2000);
 
-        spinRghtE(0.8, 150);
-        moveRghtE(0.5, 1700);
-        spinRghtE(0.5, 800);
-        driveBackwardE(.1, 100);
+        spinLeftE(0.5, 250);
+        moveRghtE(0.7, 1900);
+        spinLeftE(0.7, 500);
+        driveForwardE(0.5, 400);
+        moveRghtE(0.7, 600);
+        spinLeftE(0.7, 250);
+        moveLeftE(1.0, 600);
+
+        driveForwardE(0.5, 100);
         waffleup();
 
-        Thread.sleep(10000);
+        Thread.sleep(6000);
 
-        moveRghtE(0.5, 600);
-        waffledown();
+        moveRghtE(0.5, 400);
+
+        driveBackwardE(0.5, 800);
+        driveForwardE(0.8, 300);
         spinRghtE(0.5, 1800);
-        driveBackwardE(0.5, 500);
-        driveForwardE(0.8, 250);
-        moveLeftE(0.5, 400);
+        waffledown();
+        moveLeftE(0.5, 800);
 
         telemetry.addData("distance sensed", robotDS.getDistance(DistanceUnit.CM));
         telemetry.update();
 
         if (robotDS.getDistance(DistanceUnit.CM) < 30) {
             telemetry.update();
-            driveForwardE(0.5, 900);
+            driveBackwardE(0.5, 900);
             if (robotDS.getDistance(DistanceUnit.CM) < 30) {
                 telemetry.update();
                 //if it senses something both places
-                driveBackwardE(1, 900);
-                moveLeftE(1, 1000);
-                driveBackwardE(0.5, 200);
+                driveForwardE(1, 900);
+                spinRghtE(0.8, 900);
+                driveBackwardE(0.4, 400);
             }else {
                 telemetry.update();
                 //if it senses nothing
-                moveLeftE(0.6, 1000);
+                spinRghtE(0.8, 900);
+                driveBackwardE(0.4, 400);
             }
         }else {
             telemetry.update();
             //if it senses nothing
-            moveLeftE(1, 1000);
-            driveBackwardE(0.5, 200);
+            spinRghtE(0.8, 900);
+            driveBackwardE(0.4, 400);
         }
 
     }
