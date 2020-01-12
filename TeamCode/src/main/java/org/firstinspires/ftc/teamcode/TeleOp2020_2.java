@@ -99,16 +99,16 @@ public class TeleOp2020_2 extends LinearOpMode{
             //pressing 'A' reactivates the stone distance sensor
             //this is because he HAS to turn on the succ motors to get another stone
             if (gamepad1.a) {
-                stoneLeftM.setPower(1);
-                stoneRghtM.setPower(1);
+                stoneLeftM.setPower(0.75);
+                stoneRghtM.setPower(0.75);
             } else {
                 if (gamepad1.b) {
                     stoneLeftM.setPower(0);
                     stoneRghtM.setPower(0);
                 } else {
                     if (gamepad1.y) {
-                        stoneLeftM.setPower(-1);
-                        stoneRghtM.setPower(-1);
+                        stoneLeftM.setPower(-0.75);
+                        stoneRghtM.setPower(-0.75);
                     }
                 }
             }
@@ -142,12 +142,12 @@ public class TeleOp2020_2 extends LinearOpMode{
 
             //KV can grab the waffle for Endgame.
             if (gamepad1.dpad_left) {
-                waffleForeS.setPosition(0.47);
-                waffleBackS.setPosition(0.08);
+                waffleForeS.setPosition(0.00);
+                waffleBackS.setPosition(1.00);
             } else {
                 if (gamepad1.dpad_right) {
-                    waffleForeS.setPosition(0.00);
-                    waffleBackS.setPosition(0.55);
+                    waffleForeS.setPosition(0.35);
+                    waffleBackS.setPosition(0.62);
                 }
             }
         }
