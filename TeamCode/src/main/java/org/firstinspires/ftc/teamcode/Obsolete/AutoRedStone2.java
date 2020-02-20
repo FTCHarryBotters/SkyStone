@@ -251,7 +251,6 @@ public class AutoRedStone2 extends LinearOpMode {
         double distC=wallLCDS.getDistance(DistanceUnit.CM);//saves distance measurement
         double distB=wallLBDS.getDistance(DistanceUnit.CM);//saves distance measurement
 
-
         while (distC>distanceCM || distB>distanceCM) {       //checks if we've reached dist from wall
 
             distC = wallLCDS.getDistance(DistanceUnit.CM); //re-saves distance measurement
@@ -325,6 +324,7 @@ public class AutoRedStone2 extends LinearOpMode {
             }
         }
     }
+
     public void driveForwardE(double power, int ticks) {
         //Reset Encoders
         driveFLM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

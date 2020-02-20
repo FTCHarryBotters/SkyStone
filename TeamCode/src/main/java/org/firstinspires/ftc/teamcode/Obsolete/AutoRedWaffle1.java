@@ -14,9 +14,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "AutoBluWaffle1", group = "Sample")
+@Autonomous(name = "AutoRedWaffle1", group = "Sample")
 @Disabled
-public class AutoBluWaffle1 extends LinearOpMode {
+public class AutoRedWaffle1 extends LinearOpMode {
 
     //declare
     private DcMotor driveFLM;
@@ -27,17 +27,16 @@ public class AutoBluWaffle1 extends LinearOpMode {
     //declare servos
     private Servo waffleForeS;
     private Servo waffleBackS;
-    private Servo succLeftS;
-    private Servo succRghtS;
 
     //declare sensors
     private DistanceSensor robotDS;
 
-    // The IMU sensor object
+    //imu stuff
     private BNO055IMU imu;
     private Orientation angles;
     private Orientation lastAngles = new Orientation();
     private double globalAngle;
+
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -52,10 +51,8 @@ public class AutoBluWaffle1 extends LinearOpMode {
             //init servos
             waffleForeS = hardwareMap.servo.get("waffleFrontS");
             waffleBackS = hardwareMap.servo.get("waffleBackS");
-            succLeftS     = hardwareMap.servo.get("succLeftS");
-            succRghtS     = hardwareMap.servo.get("succRightS");
 
-            //declare sensor of destance
+            //declare sensor of distance
             robotDS = hardwareMap.get(DistanceSensor.class, "robotDS");
 
             //set motor directions
@@ -82,63 +79,57 @@ public class AutoBluWaffle1 extends LinearOpMode {
         waitForStart();
         //what runs
 
-        succLeftS.setPosition(1);
-        succRghtS.setPosition(0);
-        waffleup();
-
-        driveBackwardE(0.5, 900);
-        moveLeftE(0.5, 1400);
+        waffleUp();
+        driveForwardE(0.5, 900);
+        moveLeftE(0.9, 1400);
         moveLeftE(0.1, 200);
 
-        waffledown();
+        waffleDown();
         Thread.sleep(500);
+        
+        moveRghtE(0.5, 1100);
+        spinRMoveRE(0.5, 2800);
+        moveLeftE(0.5, 1200);
 
-        moveRghtE(0.5, 1000);
-        spinLMoveRE(0.8, 4000);
-        moveLeftE(0.5, 1400);
-
-        waffleup();
-        Thread.sleep(500);
+        waffleUp();
 
         moveRghtE(0.5, 400);
-        driveBackwardE(0.5, 600);
-        driveForwardE(0.5, 400);
-        spinLeftEG(0.5, 1800, 180);
-        gyroAlign(-90, 0.04);
-        driveForwardE(0.3, 250);
-        moveLeftE(0.5, 750);
+        spinRghtEG(0.5, 1800, 180);
+        driveBackwardE(0.5, 1000);
+        driveForwardE(0.5, 500);
+        gyroAlign(90, 0.04);
+        moveLeftE(0.5, 500);
 
         telemetry.addData("distance sensed", robotDS.getDistance(DistanceUnit.CM));
         telemetry.update();
 
         if (robotDS.getDistance(DistanceUnit.CM) < 40) {
             telemetry.update();
-            driveBackwardE(0.5, 900);
+            driveForwardE(0.5, 900);
             if (robotDS.getDistance(DistanceUnit.CM) < 40) {
                 telemetry.update();
                 //if it senses something both places
-                driveForwardE(1, 900);
-                spinRghtEG(0.8, 900,90);
-                driveBackwardE(0.4, 900);
+                driveBackwardE(1, 900);
+                moveLeftE(1, 1000);
+                driveBackwardE(0.5, 200);
             }else {
                 telemetry.update();
                 //if it senses nothing
-                spinRghtEG(0.8, 900,90);
-                driveBackwardE(0.4, 900);
+                moveLeftE(0.6, 1000);
             }
         }else {
             telemetry.update();
             //if it senses nothing
-            spinRghtEG(0.8, 900,90);
-            driveBackwardE(0.4, 900);
+            moveLeftE(0.6, 1000);
+            driveBackwardE(0.5, 200);
         }
     }
     //methods
-    private void waffledown() {
+    private void waffleDown() {
         waffleForeS.setPosition(0.35);
         waffleBackS.setPosition(0.62);
     }
-    private void waffleup() {
+    private void waffleUp() {
         waffleForeS.setPosition(0.00);
         waffleBackS.setPosition(1.00);
     }
@@ -426,44 +417,38 @@ public class AutoBluWaffle1 extends LinearOpMode {
         driveBRM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    private void spinLMoveRE(double power, int ticks) {
+    private void spinRMoveRE(double power, int ticks) {
         //Reset Encoders
         driveFLM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveBLM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        driveBRM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        driveFRM.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //set target position
         driveFLM.setTargetPosition(ticks);
-        driveBLM.setTargetPosition(-ticks);
-        driveBRM.setTargetPosition(ticks);
+        driveFRM.setTargetPosition(-ticks);
 
         //set ot RUN_TO_POSITION mode
         driveFLM.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        driveBLM.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        driveBRM.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        driveFRM.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //spinRight
         driveFLM.setPower(power);
-        driveBLM.setPower(power);
-        driveBRM.setPower(power);
+        driveFRM.setPower(power);
 
         //wait until target position
-        while (driveFLM.isBusy() && driveBLM.isBusy() && driveBRM.isBusy()) {
+        while (driveFLM.isBusy() && driveFRM.isBusy())
+        {
 
         }
 
         //stopMoving();
         driveFLM.setPower(0);
-        driveBLM.setPower(0);
-        driveBRM.setPower(0);
+        driveFRM.setPower(0);
 
         driveFLM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        driveBLM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        driveBRM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        driveFRM.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         driveFLM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveBLM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        driveBRM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        driveFRM.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     private void spinLeftEG(double power, int ticks, double degrees) {

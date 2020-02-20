@@ -49,7 +49,6 @@ import java.util.List;
 
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.XYZ;
-import static org.firstinspires.ftc.robotcore.external.navigation.AxesOrder.YZX;
 import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.EXTRINSIC;
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
 
@@ -85,6 +84,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 
 
 @TeleOp(name="Vuforia Test", group ="Concept")
+@Disabled
 public class VuforiaTest_0 extends LinearOpMode {
 
     // IMPORTANT:  For Phone Camera, set 1) the camera source and 2) the orientation, based on how your phone is mounted:
@@ -138,6 +138,7 @@ public class VuforiaTest_0 extends LinearOpMode {
     private float phoneYRotate    = 0;
     private float phoneZRotate    = 0;
 
+    double position;
     int i;
 
     @Override public void runOpMode() {
@@ -342,21 +343,25 @@ public class VuforiaTest_0 extends LinearOpMode {
                 // express the rotation of the robot in degrees.
                 Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
                 telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
-                if (translation.get(1)>-1) {
+                position = translation.get(1);
+                if (position>=50) {
                     i=0;
-                    telemetry.addData("i", i);
+                    telemetry.addData("sk", position);
+                    telemetry.addData("position", i);
                     telemetry.update();
-                }
-                if (translation.get(1)>-5 && translation.get(0)<-1) {
+                }else {
+                if (position>=-140 && position<50) {
                     i=1;
-                    telemetry.addData("i", i);
+                    telemetry.addData("sk", position);
+                    telemetry.addData("position", i);
                     telemetry.update();
-                }
-                if (translation.get(1)<-5) {
+                }else{
+                if (position<-140) {
                     i=2;
-                    telemetry.addData("i", i);
+                    telemetry.addData("sk", position);
+                    telemetry.addData("position", i);
                     telemetry.update();
-                }
+                }}}
             }
             else {
                 telemetry.addData("Visible Target", "none");

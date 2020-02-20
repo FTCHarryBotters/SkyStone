@@ -8,15 +8,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 @Disabled
 public class AutoTemplate extends LinearOpMode {
     //declare
-
     @Override
     public void runOpMode() throws InterruptedException {
         //init
-
         waitForStart();
         //what runs
-
     }
     //methods
-
 }
